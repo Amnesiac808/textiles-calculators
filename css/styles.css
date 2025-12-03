@@ -162,6 +162,49 @@ footer {
   color: var(--muted);
 }
 
+.formula-block {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.formula-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--fg);
+}
+
+.formula-fraction {
+  display: inline-block;
+  text-align: center;
+  margin: 0.5rem 0;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+.formula-fraction .numerator {
+  padding-bottom: 0.2rem;
+}
+
+.formula-fraction .bar {
+  border-top: 2px solid #000;
+  width: 100%;
+  margin: 0.2rem 0;
+}
+
+.formula-fraction .denominator {
+  padding-top: 0.2rem;
+}
+
+.equals-line {
+  margin-top: 0.4rem;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.95rem;
+  text-align: center;
+  color: var(--fg);
+}
+
 @media (max-width: 600px) {
   h1 {
     font-size: 1.5rem;
