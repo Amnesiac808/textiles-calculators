@@ -1,28 +1,30 @@
-// js/ui/drawChangeWheelView.js
 import { calculateNewChangeWheel } from "../calculators/drawChangeWheel.js";
 
 export function renderDrawChangeWheel(root) {
   root.innerHTML = `
-    <h1>Draw Frame: Draft Change Wheel</h1>
+    <h1>Draw Frame Draft Change Wheel</h1>
     <p class="lede">
       Find the new draft change wheel when you alter the weight of hank or sliver.
-      Use either metric or imperial.
+      Use the same units and test length for both present and desired weights.
     </p>
 
+    <section class="panel" aria-label="Draft change wheel calculator">
+      <div class="panel-title">Calculator</div>
+
       <div class="field">
-        <label for="desiredWeight">Desired Weight</label>
+        <label for="desiredWeight">Desired weight</label>
         <input id="desiredWeight" type="number" step="0.01" min="0" inputmode="decimal">
-        <span class="hint">For example grams per 6 yards of sliver.</span>
+        <span class="hint">For example grams per 6 or 10 yards of sliver.</span>
       </div>
 
       <div class="field">
-        <label for="currentWheel">Change Wheel On</label>
+        <label for="currentWheel">Change wheel on</label>
         <input id="currentWheel" type="number" step="1" min="1" inputmode="numeric">
         <span class="hint">Teeth on the current draft change wheel.</span>
       </div>
 
       <div class="field">
-        <label for="presentWeight">Current Weight of Sliver</label>
+        <label for="presentWeight">Present weight of sliver</label>
         <input id="presentWeight" type="number" step="0.01" min="0" inputmode="decimal">
         <span class="hint">Measured weight using the same units and length as above.</span>
       </div>
@@ -35,22 +37,22 @@ export function renderDrawChangeWheel(root) {
       <div id="resultSecondary" class="result-secondary" aria-live="polite"></div>
 
       <div class="formula-block">
-  <div class="formula-title">Formula:</div>
+        <div class="formula-title">Formula:</div>
 
-  <div class="formula-fraction">
-    <div class="numerator">
-      Desired Weight × Change Wheel On
-    </div>
-    <div class="bar"></div>
-    <div class="denominator">
-      Current Weight of Sliver
-    </div>
-  </div>
+        <div class="formula-fraction">
+          <div class="numerator">
+            Desired weight × Change wheel on
+          </div>
+          <div class="bar"></div>
+          <div class="denominator">
+            Present weight of sliver
+          </div>
+        </div>
 
-  <div class="equals-line">
-    = New Wheel
-  </div>
-</div>
+        <div class="equals-line">
+          = New wheel
+        </div>
+      </div>
     </section>
   `;
 
