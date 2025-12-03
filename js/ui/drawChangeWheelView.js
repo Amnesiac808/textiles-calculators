@@ -3,29 +3,26 @@ import { calculateNewChangeWheel } from "../calculators/drawChangeWheel.js";
 
 export function renderDrawChangeWheel(root) {
   root.innerHTML = `
-    <h1>Draw Frame Draft Change Wheel</h1>
+    <h1>Draw Frame: Draft Change Wheel</h1>
     <p class="lede">
       Find the new draft change wheel when you alter the weight of hank or sliver.
-      Use the same units and test length for both present and desired weights.
+      Use either metric or imperial.
     </p>
 
-    <section class="panel" aria-label="Draft change wheel calculator">
-      <div class="panel-title">Calculator</div>
-
       <div class="field">
-        <label for="desiredWeight">Desired weight</label>
+        <label for="desiredWeight">Desired Weight</label>
         <input id="desiredWeight" type="number" step="0.01" min="0" inputmode="decimal">
-        <span class="hint">For example grams per 6 or 10 yards of sliver.</span>
+        <span class="hint">For example grams per 6 yards of sliver.</span>
       </div>
 
       <div class="field">
-        <label for="currentWheel">Change wheel on</label>
+        <label for="currentWheel">Change Wheel On</label>
         <input id="currentWheel" type="number" step="1" min="1" inputmode="numeric">
         <span class="hint">Teeth on the current draft change wheel.</span>
       </div>
 
       <div class="field">
-        <label for="presentWeight">Present weight of sliver</label>
+        <label for="presentWeight">Current Weight of Sliver</label>
         <input id="presentWeight" type="number" step="0.01" min="0" inputmode="decimal">
         <span class="hint">Measured weight using the same units and length as above.</span>
       </div>
@@ -38,13 +35,22 @@ export function renderDrawChangeWheel(root) {
       <div id="resultSecondary" class="result-secondary" aria-live="polite"></div>
 
       <div class="formula-block">
-        Formula:
-        <span class="formula-inline">
-          new wheel = desired weight × change wheel on ÷ present weight
-        </span>
-        <br>
-        This assumes all other gearing stays the same and you only alter the draft change wheel.
-      </div>
+  <div class="formula-title">Formula:</div>
+
+  <div class="formula-fraction">
+    <div class="numerator">
+      Desired Weight × Change Wheel On
+    </div>
+    <div class="bar"></div>
+    <div class="denominator">
+      Current Weight of Sliver
+    </div>
+  </div>
+
+  <div class="equals-line">
+    = New Wheel
+  </div>
+</div>
     </section>
   `;
 
