@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Draw Frame Draft Change Wheel Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      max-width: 640px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      line-height: 1.4;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .calculator {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .field {
+      margin-bottom: 0.75rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 0.35rem 0.5rem;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 0.5rem 0.75rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 6px;
+      border: 1px solid #555;
+      background: #f4f4f4;
+    }
+
+    .result {
+      margin-top: 0.75rem;
+      font-weight: 600;
+    }
+
+    .note {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 0.5rem;
+    }
+
+    .formula {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95rem;
+      background: #fafafa;
+      border-radius: 6px;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.75rem;
+    }
+
+    .error {
+      color: #b00020;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Draw Frame Draft Change Wheel</h1>
+  <p>
+    Calculates the new draft change wheel when altering the weight of hank or sliver.
+  </p>
+
+  <div class="calculator">
+    <div class="field">
+      <label for="desiredWeight">
+        Desired weight
+        <span class="note">(for example grams per 6 or 10 yards)</span>
+      </label>
+      <input id="desiredWeight" type="number" step="0.01" min="0">
+    </div>
+
+    <div class="field">
+      <label for="currentWheel">
+        Change wheel on
+        <span class="note">(current draft change wheel teeth)</span>
+      </label>
+      <input id="currentWheel" type="number" step="1" min="1">
+    </div>
+
+    <div class="field">
+      <label for="presentWeight">
+        Present weight of sliver
+        <span class="note">(same units and length as desired weight)</span>
+      </label>
+      <input id="presentWeight" type="number" step="0.01" min="0">
+    </div>
+
+    <button id="calcButton">Calculate new change wheel</button>
+
+    <div id="error" class="error" aria-live="polite"></div>
+    <div id="result" class="result" aria-live="polite"></div>
+
+    <div class="formula">
+      Formula: new wheel = desired weight × change wheel on ÷ present weight
+    </div>
+  </div>
+
+  <script>
+    function calculateNewChangeWheel(desiredWeight, currentWheel, presentWeight) {
+      // Avoid divide by zero or nonsense
+      if (presentWeight <= 0 || currentWheel <= 0 || desiredWeight <= 0) {
+        return null;
+      }
+
+      var raw = desiredWeight * currentWheel / presentWeight;
+      var rounded = Math.round(raw);
+
+      return {
+        raw: raw,
+        rounded: rounded
+      };
+    }
+
+    document.getElementById("calcButton").addEventListener("click", function () {
+      var desiredWeight = parseFloat(document.getElementById("desiredWeight").value);
+      var currentWheel = parseFloat(document.getElementById("currentWheel").value);
+      var presentWeight = parseFloat(document.getElementById("presentWeight").value);
+
+      var errorEl = document.getElementById("error");
+      var resultEl = document.getElementById("result");
+      errorEl.textContent = "";
+      resultEl.textContent = "";
+
+      if (isNaN(desiredWeight) || isNaN(currentWheel) || isNaN(presentWeight)) {
+        errorEl.textContent = "Please enter values for all three fields.";
+        return;
+      }
+
+      var result = calculateNewChangeWheel(desiredWeight, currentWheel, presentWeight);
+      if (!result) {
+        errorEl.textContent = "Values must be greater than zero.";
+        return;
+      }
+
+      resultEl.textContent =
+        "New draft change wheel: " + result.rounded + " teeth " +
+        "(exact value " + result.raw.toFixed(2) + " teeth).";
+    });
+  </script>
+</body>
+</html>
